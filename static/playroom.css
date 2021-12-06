@@ -1,0 +1,47 @@
+
+
+.log_picture li{
+    display: inline;
+    white-space: nowrap;
+}
+
+#draw-area{
+    border:2px solid coral;
+    border-radius: 8px;
+    text-align:center;
+    margin: 0 auto;
+}
+.log_box {
+    width: 600px;
+    height: 250px;
+    display:flex;
+    overflow-x: scroll;
+    text-align:center;
+    margin: 0 auto;
+    border:3px solid rgb(199, 132, 8);
+    padding-top: 8px;
+    background-color: white;
+}
+.log_box img{
+    width: 180px;
+    height: 180px;
+    padding:2vw;
+    border: 1px solid #000000;
+    border-radius: 8px;
+}
+
+ul {
+    list-style: none;
+}
+
+.name{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.button{
+    background-color: white;
+}
+
+.player{
+    text-align: center;
+    margin: 0 auto;
+}

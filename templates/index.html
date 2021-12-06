@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <div>
+        <h1>Online Illust Chainer</h1>
+        <div id="register">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="make-tab" data-bs-toggle="tab" href="#make" role="tab" aria-controls="make" >ルームを作る</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="into-tab" data-bs-toggle="tab" href="#into" role="tab" aria-controls="into">ルームに入る</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="make" role="tabpanel" aria-labelledby="make-tab">
+                    <form action="/make" method="post">
+                        <div class="form-group">
+                            <input autocomplete="off" autofocus class="form-control" name="room_name" placeholder="Room name" type="text">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="password" placeholder="Password" type="password">
+                        </div>
+                        <div class="form-group">
+                            <input autocomplete="off" autofocus class="form-control" name="player_name" placeholder="Player name" type="text">
+                        </div>
+                        <button class="btn btn-outline-warning" type="submit">作成</button>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="into" role="tabpanel" aria-labelledby="into-tab">
+                    <form action="/login" method="post">
+                        <div class="form-group">
+                            <input autocomplete="off" autofocus class="form-control" name="room_name" placeholder="Room name" type="text">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="password" placeholder="Password" type="password">
+                        </div>
+                        <div class="form-group">
+                            <input autocomplete="off" autofocus class="form-control" name="player_name" placeholder="Player name" type="text">
+                        </div>
+                        <button class="btn btn-outline-warning" type="submit">Log In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="error">
+            {{ message }}
+        </div>
+    </div>        
+{% endblock %}

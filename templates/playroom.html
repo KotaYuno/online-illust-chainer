@@ -1,0 +1,45 @@
+{% extends  "layout.html" %}
+{% block css %}
+    <link href="/static/playroom.css" rel="stylesheet">
+    
+{% endblock %}
+{% block title%}
+playroom
+{% endblock%}
+
+{% block main%}
+    <p>
+        ルーム名
+        <h2>{{ room_name }}</h2>
+    </p>
+    <p>
+        現在のwriter:
+        <strong id = "now_writer">{{now_writer}}</strong>
+    </p>
+    <div class="main-area">
+        <div>
+            <canvas id="draw-area" width="400px" height="400px"></canvas>
+        </div>
+        <div>
+            <h3>Players</h3>
+            <ul id="player">
+            {% for player in players%}
+                <li id={{player}}>{{player}}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div id= "change_button">
+        <button id="clear-button" class="btn btn-outline-secondary button">全消し</button>
+        <button id="eraser-button" class="btn btn-outline-secondary button">消しゴムモード</button>
+        <button id="end-button" type="submit" class="btn btn-outline-secondary button">完了</button>
+    </div>
+    <form>
+        <button id ="leave" type=submit formaction="/" formmethod="GET" class="btn btn-outline-info button">退室する</button>
+    </form>
+    <div class="log_box" id="log_box">
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+    <script src="static/playroom.js"></script>
+{% endblock%}
