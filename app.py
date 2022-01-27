@@ -289,3 +289,5 @@ def disconnect():
     session.clear()
 
     
+if __name__ == "__main__":
+    app.run()
