@@ -10,6 +10,7 @@
     border-radius: 8px;
     text-align:center;
     margin: 0 auto;
+    cursor: crosshair;
 }
 .log_box {
     width: 600px;
@@ -36,12 +37,21 @@ ul {
 
 .name{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 10px auto;
+    width: 90px;
+    border-radius: 10px;
+    background-color: white;
 }
 .button{
     background-color: white;
 }
 
-.player{
+
+#players{
     text-align: center;
-    margin: 0 auto;
+    margin: 10px auto;
+    width: 200px;
+    border: 1px solid rgb(131, 209, 209);
+    border-radius: 5px;
+    background-color: rgb(130, 207, 207)
 }

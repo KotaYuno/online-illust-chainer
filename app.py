@@ -13,6 +13,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from functools import wraps
 
+
 async_mode = None
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -49,6 +50,10 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         if session.get("room") is None:
             return redirect("/")
+        elif not session["room"] in roomes:
+            return redirect("/")
+        elif not session["player"] in user_in_room[session["room"]]:
+            return redirect("/re")
         return f(*args, **kwargs)
     return decorated_function
 
@@ -150,14 +155,22 @@ def make_room():
     now_writer[room_name] = user_name
     now_isPen[room_name] = False
 
+    pictures[room_name] = list()
+
     session.clear()
     session["room"] = room_name
     session["pass"] = room_pass
     session["player"] = user_name
     return redirect("/playroom")
 
+@app.route("/re")
+def re():
+    room = session["room"]
+    player = session["player"]
+    user_in_room[room].append(player)
+    return redirect("/playroom")
+
 @app.route("/pic", methods=["POST"])
-@login_required
 def recive_pic():
     date = request.get_json()
     #fetchで送られてきたstrの変換された画像データ
@@ -178,9 +191,6 @@ def recive_pic():
     cv2.imwrite(os.path.join("static/pic", filename), img)
 
     room = session["room"]
-    #logの情報を持つ配列の作成
-    if room not in pictures.keys():
-        pictures[room] = list()
     pictures[room].append(filename)
 
     socketio.emit('server_pic', {"file_name":filename, "user_name":username}, to=room)
@@ -191,9 +201,11 @@ def recive_pic():
 
 def send_writer():
     room = session["room"]
+    if not room in user_in_room:
+        return True
     room_users = user_in_room[room]
-    if len(room_users) == 0:
-        return 0
+    if len(room_users) == 1:
+        return True
     now_user = room_users.index(session["player"])
     if len(room_users) - 1 == now_user:
         next_user_name = room_users[0]
@@ -203,7 +215,7 @@ def send_writer():
     now_writer[room] = next_user_name
     emit('select_writer', to=next_user_sid)
     emit('who_writer', next_user_name, to=room)
-    return len(room_users)
+    return False
 
 def close(room):
     #部屋情報の削除
@@ -230,19 +242,19 @@ def on_join():
             emit('server_pic',{"file_name":picture, "user_name":user}, to=user_sid[username])
     
 
-@socketio.on('leave')
-def on_leave():
-    username = session["player"]
-    room = session["room"]
-    emit('after_leave',username, to=room)
-    if send_writer() == 1:
-        leave_room(room)
-        close_room(room)
-        close(room)
-    else:
-        leave_room(room)
-        user_in_room[room].remove(username)
-    session.clear()
+# @socketio.on('leave')
+# def on_leave():
+#     username = session["player"]
+#     room = session["room"]
+#     emit('after_leave',username, to=room)
+#     if send_writer() == 1:
+#         leave_room(room)
+#         close_room(room)
+#         close(room)
+#     else:
+#         leave_room(room)
+#         user_in_room[room].remove(username)
+#     session.clear()
 
 @socketio.on('client_to_server')
 def draw(json):
@@ -281,11 +293,13 @@ def trun_end():
 def disconnect():
     room = session["room"]
     player = session["player"]
-    if send_writer() == 1:
+    print("disconnect")
+    if send_writer():
         close_room(room)
         close(room)
     else:
         emit('after_leave',player, to=room)
+        user_in_room[room].remove(player)
     session.clear()
 
     

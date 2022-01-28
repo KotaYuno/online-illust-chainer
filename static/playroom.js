@@ -13,7 +13,7 @@ window.addEventListener('load', () => {
 
     const lastPosition = { x: null, y: null };
     let isDrag = false;
-    let isPen = false;
+    let isPen = true;
     
     //自分の番かどうか判別する真偽値
     let isWriter = false;
@@ -152,10 +152,10 @@ window.addEventListener('load', () => {
         };
       });
 
-      const leaveButton =document.querySelector('#leave');
-      leaveButton.addEventListener('click', function(){
-          socket.emit("leave");
-      });
+      // const leaveButton =document.querySelector('#leave');
+      // leaveButton.addEventListener('click', function(){
+      //     socket.emit("leave");
+      // });
   
       canvas.addEventListener('mousedown', dragStart);
       canvas.addEventListener('mouseup', dragEnd);
@@ -195,7 +195,19 @@ window.addEventListener('load', () => {
     socket.on('server_eraser',eraser);
 
     socket.on('server_pic', function(msg) {
-      $("#log_box").append("<div><div class=\"name\">"+ msg['user_name'] +"</div><img src=\"static/pic/"+ msg['file_name'] +"\" class=\"log\"></div>");
+      const divEl = document.createElement("div");
+      const divChildEl = document.createElement("div");
+      divChildEl.setAttribute("class", "name");
+      divChildEl.textContent = msg['user_name'];
+      const imgEl = document.createElement("img");
+      imgEl.setAttribute("class", "log");
+      imgEl.src = `static/pic/${msg['file_name']}`;
+      imgEl.alt = msg['user_name'];
+      divEl.appendChild(divChildEl);
+      divEl.appendChild(imgEl);
+
+      const logbox = document.querySelector("#log_box");
+      logbox.appendChild(divEl);
     });
 
     socket.on('select_writer', function(){
@@ -209,7 +221,13 @@ window.addEventListener('load', () => {
 
     socket.on('after_join', function(date) {
       if (firstname == false){
-        $("#player").append("<li id=\"" + date + "\">"+ date + "</li>");
+        const liEl = document.createElement("li");
+        liEl.textContent = date;
+        liEl.id = date;
+        liEl.className = "name"
+        console.log(`name ${date}`);
+        const ulEl = document.querySelector("#player");
+        ulEl.appendChild(liEl);
       }
       else{
         firstname = false;
@@ -217,8 +235,8 @@ window.addEventListener('load', () => {
     });
     
     socket.on('after_leave', function(date) {
-      leave_name = "#" + date;
-      $(leave_name).remove();   
+      const removeEl = document.getElementById(date);
+      removeEl.remove();
     });
 
     initEventHandler();
