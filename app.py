@@ -54,6 +54,8 @@ def login_required(f):
             return redirect("/")
         elif not session["player"] in user_in_room[session["room"]]:
             return redirect("/re")
+        elif session["pass"] != roomes[session["room"]]:
+            return redirect("/")
         return f(*args, **kwargs)
     return decorated_function
 

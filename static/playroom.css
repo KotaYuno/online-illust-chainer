@@ -35,12 +35,16 @@ ul {
     list-style: none;
 }
 
+li{
+    list-style-type: none;
+}
+
 .name{
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    margin: 10px auto;
+    margin:10px;
     width: 90px;
     border-radius: 10px;
     background-color: white;
+    list-style-type: square;
 }
 .button{
     background-color: white;
@@ -51,7 +55,15 @@ ul {
     text-align: center;
     margin: 10px auto;
     width: 200px;
-    border: 1px solid rgb(131, 209, 209);
+    border: 10px double rgb(147, 236, 152);
     border-radius: 5px;
-    background-color: rgb(130, 207, 207)
+    background-color: rgb(130, 207, 207);
+}
+
+#player{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
 }
