@@ -29,8 +29,8 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+# # socketio.run(app, debug=True)
 # socketio.run(app, debug=True)
-socketio.run(app, debug=True)
 
 #key:room名, 値:パスワード
 roomes = {}
