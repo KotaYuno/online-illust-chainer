@@ -305,5 +305,5 @@ def disconnect():
     session.clear()
 
     
-
-app.run()
+if __name__ == "__main__":
+    app.run()
