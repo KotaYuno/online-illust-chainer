@@ -175,27 +175,27 @@ def re():
 @app.route("/pic", methods=["POST"])
 def recive_pic():
     date = request.get_json()
-    #fetchで送られてきたstrの変換された画像データ
-    literal_date = date['date']
-    #バイナリデータに変換
-    binary_pic = literal_date.replace('data:image/png;base64,', '')
-    #デコード
-    array_pic = base64.b64decode(binary_pic)
-    #多次元配列を解消
-    png = np.frombuffer(array_pic, dtype=np.uint8)
-    img = cv2.imdecode(png, cv2.IMREAD_COLOR)
-    #ファイル名の作成,ファイル名：user名 + "_" + 日時
-    username = session["player"]
-    now_time = datetime.datetime.now()
-    now_time_str = str(now_time).replace(' ', "").replace(".", "_").replace("-", "_").replace(":", "_")
-    filename = str(username) + "_" +now_time_str + ".png"
-    #画像を保存
-    cv2.imwrite(os.path.join("static/pic", filename), img)
+    # #fetchで送られてきたstrの変換された画像データ
+    # literal_date = date['date']
+    # #バイナリデータに変換
+    # binary_pic = literal_date.replace('data:image/png;base64,', '')
+    # #デコード
+    # array_pic = base64.b64decode(binary_pic)
+    # #多次元配列を解消
+    # png = np.frombuffer(array_pic, dtype=np.uint8)
+    # img = cv2.imdecode(png, cv2.IMREAD_COLOR)
+    # #ファイル名の作成,ファイル名：user名 + "_" + 日時
+    # username = session["player"]
+    # now_time = datetime.datetime.now()
+    # now_time_str = str(now_time).replace(' ', "").replace(".", "_").replace("-", "_").replace(":", "_")
+    # filename = str(username) + "_" +now_time_str + ".png"
+    # #画像を保存
+    # cv2.imwrite(os.path.join("static/pic", filename), img)
 
     room = session["room"]
-    pictures[room].append(filename)
+    # pictures[room].append(filename)
 
-    socketio.emit('server_pic', {"file_name":filename, "user_name":username}, to=room)
+    # socketio.emit('server_pic', {"file_name":filename, "user_name":username}, to=room)
     resuponsu = {'result': True}
     socketio.emit('server_clear_button', to=room)
     return jsonify(resuponsu)
