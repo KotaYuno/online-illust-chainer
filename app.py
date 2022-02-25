@@ -18,10 +18,10 @@ async_mode = None
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-#自動でテンプレートが読み取られるかの確認
-app.config["TEMPLATES_AUTO_RELOAD"] = True
+# #自動でテンプレートが読み取られるかの確認
+# app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-app.config['SECRET_KEY'] = 'secret!'
+# app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
 
 app.config["SESSION_FILE_DIR"] = mkdtemp()
