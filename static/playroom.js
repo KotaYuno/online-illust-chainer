@@ -162,7 +162,7 @@ window.addEventListener('load', () => {
       canvas.addEventListener('mouseout', dragEnd);
       canvas.addEventListener('mousemove', (event) => {
         if(isWriter){
-          draw(event.layerX, event.layerY);
+          draw(event.offsetX, event.offsetY);
         }
       });
     }
